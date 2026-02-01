@@ -1,0 +1,21 @@
+﻿settings:
+  open-in-air: true
+  allow-offhand: true
+  allow-shulker-inside: false
+  require-sneak: false
+  inventory-title: "<gold>cos</gold> <gray>shulker</gray>"
+  permission:
+    open: "cos.use"
+
+messages:
+  prefix: "<dark_gray>[</dark_gray><gold>cos</gold><dark_gray>]</dark_gray> "
+  no-permission: "{prefix}<red>yetkin yok.</red>"
+  reloaded: "{prefix}<green>ayarlar yenilendi.</green>"
+  not-shulker: "{prefix}<yellow>elinde shulker yok.</yellow>"
+  already-open: "{prefix}<yellow>zaten acik.</yellow>"
+  open: "{prefix}<green>shulker açıldı.</green>"
+  unknown-command: "{prefix}<red>bilinmeyen komut.</red>"
+  help:
+    - "{prefix}<gray>komutlar:</gray>"
+    - "<gold>/cos help</gold> <gray>- yardim</gray>"
+    - "<gold>/cos reload</gold> <gray>- ayarlari yenile</gray>"
