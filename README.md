@@ -69,4 +69,4 @@ Gradle:
 PR ve issue'lar her zaman acik. Fikirlerinizi paylasabilirsiniz.
 
 ## Lisans
-Lisans bilgisini buraya ekleyebilirsiniz.
+MIT License. 2026
