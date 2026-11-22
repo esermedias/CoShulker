@@ -1,5 +1,6 @@
 # CoShulker
 
+[![Build](https://github.com/esermedias/CoShulker/actions/workflows/build.yml/badge.svg)](https://github.com/esermedias/CoShulker/actions/workflows/build.yml)
 ![Paper](https://img.shields.io/badge/Paper-1.20%2B-1f6feb?style=flat-square)
 ![Folia](https://img.shields.io/badge/Folia-supported-238636?style=flat-square)
 ![Java](https://img.shields.io/badge/Java-21-f89820?style=flat-square)
