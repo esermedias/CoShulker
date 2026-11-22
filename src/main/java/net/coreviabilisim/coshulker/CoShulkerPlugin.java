@@ -2,11 +2,12 @@ package net.coreviabilisim.coshulker;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -31,8 +32,9 @@ import org.bukkit.block.ShulkerBox;
 import org.bukkit.event.block.Action;
 
 public class CoShulkerPlugin extends JavaPlugin implements Listener, CommandExecutor, TabCompleter {
-  private final Map<UUID, OpenSession> openSessions = new HashMap<>();
-  private MessageManager messages;
+  // On Folia, events for players in different regions fire on different threads at the same time.
+  private final Map<UUID, OpenSession> openSessions = new ConcurrentHashMap<>();
+  private volatile MessageManager messages;
 
   @Override
   public void onEnable() {
@@ -50,13 +52,24 @@ public class CoShulkerPlugin extends JavaPlugin implements Listener, CommandExec
 
   @Override
   public void onDisable() {
+    // Write contents back first: if this is skipped, items taken out while the box was open get duplicated.
     for (OpenSession session : new ArrayList<>(openSessions.values())) {
       Player player = Bukkit.getPlayer(session.getPlayerId());
-      if (player != null && player.isOnline()) {
+      if (player == null || !player.isOnline()) {
+        continue;
+      }
+      try {
         applyShulkerContents(player, session);
+      } catch (RuntimeException ex) {
+        getLogger().log(Level.WARNING, "Could not save shulker contents for " + player.getName(), ex);
+        continue;
+      }
+      try {
         if (player.getOpenInventory().getTopInventory().equals(session.getInventory())) {
           player.closeInventory();
         }
+      } catch (IllegalStateException ignored) {
+        // Folia refuses entity access from the wrong thread during shutdown; contents are already saved.
       }
     }
     openSessions.clear();
