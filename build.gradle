@@ -1,28 +1,33 @@
 plugins {
-    id "java"
+    id 'java'
 }
 
-group = "net.coreviabilisim"
-version = "1.0.0"
+group = 'net.coreviabilisim'
+version = '1.1.0'
 
 repositories {
-    maven { url "https://repo.papermc.io/repository/maven-public/" }
+    mavenCentral()
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
 }
 
 dependencies {
-    compileOnly "io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT"
-}
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+    compileOnly 'io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT'
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = "UTF-8"
+    options.encoding = 'UTF-8'
+    options.release = 21
 }
 
 processResources {
-    filteringCharset = "UTF-8"
+    filteringCharset = 'UTF-8'
+    def props = [version: project.version]
+    inputs.properties(props)
+    filesMatching('plugin.yml') {
+        expand(props)
+    }
+}
+
+jar {
+    archiveFileName = "${project.name}-${project.version}.jar"
 }

@@ -26,3 +26,10 @@ replay_pid*
 # Gradle build output
 .gradle/
 build/
+
+# IDE
+.idea/
+*.iml
+
+# Keep the Gradle wrapper
+!gradle/wrapper/gradle-wrapper.jar
