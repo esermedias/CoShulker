@@ -4,3 +4,7 @@
 /gradlew text eol=lf
 *.bat text eol=crlf
 *.jar binary
+
+# Language stats: only count source code
+*.html linguist-generated
+build/** linguist-generated
